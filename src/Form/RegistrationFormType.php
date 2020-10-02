@@ -44,10 +44,10 @@ class RegistrationFormType extends AbstractType
             ])
             ->add('nom')
             ->add('prenom')
-            //->add('telephone')
-            //->add('ville')
-            //->add('code_postal')
-            //->add('adresse')
+            ->add('telephone')
+            ->add('ville')
+            ->add('code_postal')
+            ->add('adresse')
         ;
     }
 

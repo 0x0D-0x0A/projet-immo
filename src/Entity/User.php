@@ -36,6 +36,26 @@ class User implements UserInterface
     private $nom;
 
     /**
+     * @ORM\Column(type="string", length=10)
+     */
+    private $telephone;
+
+    /**
+     * @ORM\Column(type="string", length=50)
+     */
+    private $adresse;
+
+    /**
+     * @ORM\Column(type="string", length=36)
+     */
+    private $ville;
+
+    /**
+     * @ORM\Column(type="string", length=5)
+     */
+    private $code_postal;
+
+    /**
      * @ORM\Column(type="json")
      */
     private $roles = [];
@@ -83,6 +103,54 @@ class User implements UserInterface
     public function setPrenom(string $prenom): self
     {
         $this->prenom = $prenom;
+
+        return $this;
+    }
+
+    public function getTelephone(): ?string
+    {
+        return $this->telephone;
+    }
+
+    public function setTelephone(string $telephone): self
+    {
+        $this->telephone = $telephone;
+
+        return $this;
+    }
+
+    public function getAdresse(): ?string
+    {
+        return $this->adresse;
+    }
+
+    public function setAdresse(string $adresse): self
+    {
+        $this->adresse = $adresse;
+
+        return $this;
+    }
+
+    public function getVille(): ?string
+    {
+        return $this->ville;
+    }
+
+    public function setVille(string $ville): self
+    {
+        $this->ville = $ville;
+
+        return $this;
+    }
+
+    public function getCodePostal(): ?string
+    {
+        return $this->code_postal;
+    }
+
+    public function setCodePostal(string $code_postal): self
+    {
+        $this->code_postal = $code_postal;
 
         return $this;
     }
