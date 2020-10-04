@@ -18,8 +18,8 @@ class AnnonceType extends AbstractType
             ->add('photo')
             ->add('categorie')
             ->add('type')
-            ->add('createdAt')
-            ->add('updatedAt')
+            // ->add('createdAt')
+            // ->add('updatedAt')
         ;
     }
 
