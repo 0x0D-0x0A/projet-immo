@@ -4,9 +4,13 @@ namespace App\Entity;
 
 use App\Repository\AnnonceRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=AnnonceRepository::class)
+ * @ORM\HasLifecycleCallbacks()
+ * @UniqueEntity("Title")
  */
 class Annonce
 {
@@ -56,6 +60,11 @@ class Annonce
      * @ORM\Column(type="datetime", nullable=true)
      */
     private $updatedAt;
+
+    const CATEGORIE_VENTE = 'vente';
+    const CATEGORIE_LOCATION = 'location';
+    const TYPE_MAISON = 'maison';
+    const TYPE_APPARTEMENT = 'appartement';
 
     public function getId(): ?int
     {
@@ -110,17 +119,29 @@ class Annonce
         return $this;
     }
 
+    // /**
+     // * @ORM\Column(name="categorie", type="string", columnDefinition="enum('vente', 'location')")
+     // */
     public function getCategorie(): ?string
     {
         return $this->categorie;
     }
 
-    public function setCategorie(string $categorie): self
+    public function setCategorie($categorie)
     {
+        if (!in_array($categorie, array(self::CATEGORIE_VENTE, self::CATEGORIE_LOCATION))) {
+            throw new \InvalidArgumentException("Catégorie invalide");
+        }
         $this->categorie = $categorie;
-
-        return $this;
     }
+
+
+    // public function setCategorie(string $categorie): self
+    // {
+    //     $this->categorie = $categorie;
+
+    //     return $this;
+    // }
 
     public function getType(): ?string
     {
@@ -139,9 +160,12 @@ class Annonce
         return $this->createdAt;
     }
 
-    public function setCreatedAt(\DateTimeInterface $createdAt): self
+    /**
+    * @ORM\PrePersist
+    */
+    public function setCreatedAt(): self
     {
-        $this->createdAt = $createdAt;
+        $this->CreatedAt = new \DateTime('now', new \DateTimeZone('Europe/Paris'));
 
         return $this;
     }
@@ -151,10 +175,14 @@ class Annonce
         return $this->updatedAt;
     }
 
-    public function setUpdatedAt(?\DateTimeInterface $updatedAt): self
+    /**
+    * @ORM\PreUpdate
+    */
+    public function setUpdatedAt(): self
     {
-        $this->updatedAt = $updatedAt;
+        $this->UpdatedAt = new \DateTime('now', new \DateTimeZone('Europe/Paris'));
 
         return $this;
     }
+
 }
