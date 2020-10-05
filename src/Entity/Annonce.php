@@ -22,6 +22,11 @@ class Annonce
     private $id;
 
     /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="id")
+     */
+    private $proprietaire;
+
+    /**
      * @ORM\Column(type="string", length=255)
      */
     private $titre;
