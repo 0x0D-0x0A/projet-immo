@@ -10,7 +10,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 /**
  * @ORM\Entity(repositoryClass=AnnonceRepository::class)
  * @ORM\HasLifecycleCallbacks()
- * @UniqueEntity("Title")
+ * @UniqueEntity("titre")
  */
 class Annonce
 {
@@ -135,7 +135,6 @@ class Annonce
         $this->categorie = $categorie;
     }
 
-
     // public function setCategorie(string $categorie): self
     // {
     //     $this->categorie = $categorie;
@@ -148,12 +147,20 @@ class Annonce
         return $this->type;
     }
 
-    public function setType(string $type): self
+    public function setType($type)
     {
+        if (!in_array($type, array(self::TYPE_MAISON, self::TYPE_APPARTEMENT))) {
+            throw new \InvalidArgumentException("Type invalide");
+        }
         $this->type = $type;
-
-        return $this;
     }
+
+    // public function setType(string $type): self
+    // {
+    //     $this->type = $type;
+
+    //     return $this;
+    // }
 
     public function getCreatedAt(): ?\DateTimeInterface
     {
@@ -165,7 +172,7 @@ class Annonce
     */
     public function setCreatedAt(): self
     {
-        $this->CreatedAt = new \DateTime('now', new \DateTimeZone('Europe/Paris'));
+        $this->createdAt = new \DateTime('now', new \DateTimeZone('Europe/Paris'));
 
         return $this;
     }
@@ -180,7 +187,7 @@ class Annonce
     */
     public function setUpdatedAt(): self
     {
-        $this->UpdatedAt = new \DateTime('now', new \DateTimeZone('Europe/Paris'));
+        $this->updatedAt = new \DateTime('now', new \DateTimeZone('Europe/Paris'));
 
         return $this;
     }
