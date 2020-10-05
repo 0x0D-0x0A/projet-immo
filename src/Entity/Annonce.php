@@ -10,7 +10,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 /**
  * @ORM\Entity(repositoryClass=AnnonceRepository::class)
  * @ORM\HasLifecycleCallbacks()
- * @UniqueEntity("Title")
+ * @UniqueEntity("titre")
  */
 class Annonce
 {
@@ -165,7 +165,7 @@ class Annonce
     */
     public function setCreatedAt(): self
     {
-        $this->CreatedAt = new \DateTime('now', new \DateTimeZone('Europe/Paris'));
+        $this->createdAt = new \DateTime('now', new \DateTimeZone('Europe/Paris'));
 
         return $this;
     }
@@ -180,7 +180,7 @@ class Annonce
     */
     public function setUpdatedAt(): self
     {
-        $this->UpdatedAt = new \DateTime('now', new \DateTimeZone('Europe/Paris'));
+        $this->updatedAt = new \DateTime('now', new \DateTimeZone('Europe/Paris'));
 
         return $this;
     }

@@ -42,7 +42,7 @@
 				<li class="nav-item">
 					<div class="text-white">Connecté en tant que </div>
 					<div class="text-white">{{ app.user.username }}</div>
-					<!-- <div class="text-white">{{ app.user.getUserRole() }}</div> -->
+					{# <div class="text-white">{{ app.user.getUserRole() }}</div> #}
 					<div class="text-white">{{ app.user.roles[0]|json_encode() }}</div>
 				</li>
 			</ul>
