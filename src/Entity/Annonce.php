@@ -37,7 +37,7 @@ class Annonce
     private $prix;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $photo;
 
@@ -60,11 +60,6 @@ class Annonce
      * @ORM\Column(type="datetime", nullable=true)
      */
     private $updatedAt;
-
-    const CATEGORIE_VENTE = 'vente';
-    const CATEGORIE_LOCATION = 'location';
-    const TYPE_MAISON = 'maison';
-    const TYPE_APPARTEMENT = 'appartement';
 
     public function getId(): ?int
     {
@@ -119,48 +114,29 @@ class Annonce
         return $this;
     }
 
-    // /**
-     // * @ORM\Column(name="categorie", type="string", columnDefinition="enum('vente', 'location')")
-     // */
     public function getCategorie(): ?string
     {
         return $this->categorie;
     }
 
-    public function setCategorie($categorie)
+    public function setCategorie(string $categorie): self
     {
-        if (!in_array($categorie, array(self::CATEGORIE_VENTE, self::CATEGORIE_LOCATION))) {
-            throw new \InvalidArgumentException("Catégorie invalide");
-        }
         $this->categorie = $categorie;
+
+        return $this;
     }
-
-    // public function setCategorie(string $categorie): self
-    // {
-    //     $this->categorie = $categorie;
-
-    //     return $this;
-    // }
 
     public function getType(): ?string
     {
         return $this->type;
     }
 
-    public function setType($type)
+    public function setType(string $type): self
     {
-        if (!in_array($type, array(self::TYPE_MAISON, self::TYPE_APPARTEMENT))) {
-            throw new \InvalidArgumentException("Type invalide");
-        }
         $this->type = $type;
+
+        return $this;
     }
-
-    // public function setType(string $type): self
-    // {
-    //     $this->type = $type;
-
-    //     return $this;
-    // }
 
     public function getCreatedAt(): ?\DateTimeInterface
     {

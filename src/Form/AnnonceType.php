@@ -6,6 +6,7 @@ use App\Entity\Annonce;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 
 class AnnonceType extends AbstractType
 {
@@ -16,8 +17,8 @@ class AnnonceType extends AbstractType
             ->add('description')
             ->add('prix')
             ->add('photo')
-            ->add('categorie')
-            ->add('type')
+            ->add('categorie', ChoiceType::class, ['placeholder' => 'catégorie de l\'annonce', 'choices' => ['location' => 'Location', 'vente' => 'Vente'], ])
+            ->add('type', ChoiceType::class, ['placeholder' => 'type de bien', 'choices' => ['maison' => 'Maison', 'appartement' => 'Appartement'], ])
             // ->add('createdAt')
             // ->add('updatedAt')
         ;
