@@ -135,7 +135,6 @@ class Annonce
         $this->categorie = $categorie;
     }
 
-
     // public function setCategorie(string $categorie): self
     // {
     //     $this->categorie = $categorie;
@@ -148,12 +147,20 @@ class Annonce
         return $this->type;
     }
 
-    public function setType(string $type): self
+    public function setType($type)
     {
+        if (!in_array($type, array(self::TYPE_MAISON, self::TYPE_APPARTEMENT))) {
+            throw new \InvalidArgumentException("Type invalide");
+        }
         $this->type = $type;
-
-        return $this;
     }
+
+    // public function setType(string $type): self
+    // {
+    //     $this->type = $type;
+
+    //     return $this;
+    // }
 
     public function getCreatedAt(): ?\DateTimeInterface
     {
