@@ -27,11 +27,6 @@ class Annonce
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="id")
-     */
-    private $proprietaire;
-
-    /**
      * @ORM\Column(type="string", length=255)
      */
     private $titre;
@@ -78,6 +73,12 @@ class Annonce
      */
     private $updatedAt;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="annonces")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $proprietaire;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -97,12 +98,12 @@ class Annonce
 
 /////////////////////////// Work In Progress ///////////////////////////////
 
-    public function getProprietaire(): ?string
+    public function getProprietaire(): ?User
     {
         return $this->proprietaire;
     }
 
-    public function setProprietaire(string $proprietaire): self
+    public function setProprietaire(?User $proprietaire): self
     {
         $this->proprietaire = $proprietaire;
 

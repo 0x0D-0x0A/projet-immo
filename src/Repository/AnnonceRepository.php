@@ -19,6 +19,8 @@ class AnnonceRepository extends ServiceEntityRepository
         parent::__construct($registry, Annonce::class);
     }
 
+
+
     // /**
     //  * @return Annonce[] Returns an array of Annonce objects
     //  */

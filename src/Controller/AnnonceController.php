@@ -33,11 +33,13 @@ class AnnonceController extends AbstractController
      */
     public function new(Request $request): Response
     {
+        $user = $this->getUser();
         $annonce = new Annonce();
         $form = $this->createForm(AnnonceType::class, $annonce);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $annonce->setProprietaire($user);
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($annonce);
             $entityManager->flush();
