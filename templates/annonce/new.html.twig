@@ -23,13 +23,16 @@
             {{ form_row(annonceForm.prix) }}
         </div>
         <div class="row">
-            {{ form_row(annonceForm.photo) }}
+            {{ form_row(annonceForm.photoFile) }}
+            <img src="{{ asset('/annonce/photo/' ~ annonce.photo) }}">
         </div>
         <div class="row">
-            {{ form_row(annonceForm.categorie, { label: "Catégorie (vente ou locaation)" }) }}
+            {{ form_row(annonceForm.categorie) }}
+            {# {{ form_row(annonceForm.categorie, { label: "Catégorie (vente ou location)" }) }} #}
         </div>
         <div class="row">
-            {{ form_row(annonceForm.type, { label: "Type (maison ou appartement" }) }}
+            {{ form_row(annonceForm.type) }}
+            {# {{ form_row(annonceForm.type, { label: "Type (maison ou appartement)" }) }} #}
         </div>
         <div>
             <button type="submit" class="btn">Publier</button>

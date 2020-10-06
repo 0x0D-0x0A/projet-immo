@@ -7,11 +7,15 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
 
+// intégration de VichUploaderBundle :
+use Symfony\Component\HttpFoundation\File\File;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 /**
  * @ORM\Entity(repositoryClass=AnnonceRepository::class)
  * @ORM\HasLifecycleCallbacks()
  * @UniqueEntity("titre")
+ * @Vich\Uploadable
  */
 class Annonce
 {
@@ -43,9 +47,16 @@ class Annonce
     private $prix;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=true)
+     * @var string|null
      */
     private $photo;
+
+    /**
+     * @Vich\UploadableField(mapping="annonce_photo", fileNameProperty="photo")
+     * @var File
+     */
+    private $photoFile;
 
     /**
      * @ORM\Column(type="string", length=10)
@@ -66,11 +77,6 @@ class Annonce
      * @ORM\Column(type="datetime", nullable=true)
      */
     private $updatedAt;
-
-    const CATEGORIE_VENTE = 'vente';
-    const CATEGORIE_LOCATION = 'location';
-    const TYPE_MAISON = 'maison';
-    const TYPE_APPARTEMENT = 'appartement';
 
     public function getId(): ?int
     {
@@ -134,55 +140,55 @@ class Annonce
         return $this->photo;
     }
 
-    public function setPhoto(string $photo): self
+    public function setPhoto(?string $photo): self
     {
         $this->photo = $photo;
 
         return $this;
     }
+    //ci-dessus mettre ": void" à la place de ": self" si il y a un souci avec la suppression ou autre
 
-    // /**
-     // * @ORM\Column(name="categorie", type="string", columnDefinition="enum('vente', 'location')")
-     // */
+     public function setPhotoFile(?File $photoFile = null)
+    {
+        $this->photoFile = $photoFile;
+
+        // VERY IMPORTANT:
+        // It is required that at least one field changes if you are using Doctrine,
+        // otherwise the event listeners won't be called and the file is lost
+        if ($photoFile) {
+            // if 'updatedAt' is not defined in your entity, use another property
+            $this->updatedAt = new \DateTime('now');
+        }
+    }
+
+    public function getPhotoFile()
+    {
+        return $this->photoFile;
+    }
+
     public function getCategorie(): ?string
     {
         return $this->categorie;
     }
 
-    public function setCategorie($categorie)
+    public function setCategorie(string $categorie): self
     {
-        if (!in_array($categorie, array(self::CATEGORIE_VENTE, self::CATEGORIE_LOCATION))) {
-            throw new \InvalidArgumentException("Catégorie invalide");
-        }
         $this->categorie = $categorie;
+
+        return $this;
     }
-
-    // public function setCategorie(string $categorie): self
-    // {
-    //     $this->categorie = $categorie;
-
-    //     return $this;
-    // }
 
     public function getType(): ?string
     {
         return $this->type;
     }
 
-    public function setType($type)
+    public function setType(string $type): self
     {
-        if (!in_array($type, array(self::TYPE_MAISON, self::TYPE_APPARTEMENT))) {
-            throw new \InvalidArgumentException("Type invalide");
-        }
         $this->type = $type;
+
+        return $this;
     }
-
-    // public function setType(string $type): self
-    // {
-    //     $this->type = $type;
-
-    //     return $this;
-    // }
 
     public function getCreatedAt(): ?\DateTimeInterface
     {

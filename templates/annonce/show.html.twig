@@ -25,7 +25,12 @@
             </tr>
             <tr>
                 <th>Photo</th>
-                <td>{{ annonce.photo }}</td>
+                 {% if annonce.photo is not same as(null) %}
+                      <td><img src="{{ asset('/annonce/photo/' ~ annonce.photo) }}"></td>
+                {% else %}
+                      <td>Aucune photo disponible.</td>
+                {% endif %}>
+                {# <td>{{ annonce.photo }}</td> #}
             </tr>
             <tr>
                 <th>Categorie</th>
