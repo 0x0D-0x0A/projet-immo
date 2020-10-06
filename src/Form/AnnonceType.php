@@ -8,6 +8,8 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 
+use Vich\UploaderBundle\Form\Type\VichImageType;
+
 class AnnonceType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
@@ -16,7 +18,15 @@ class AnnonceType extends AbstractType
             ->add('titre')
             ->add('description')
             ->add('prix')
-            ->add('photo')
+            // ->add('photo')
+            ->add('photoFile', VichImageType::class, [
+            'required' => false,
+            'allow_delete' => true,
+            'delete_label' => 'Supprimer',
+            'download_label' => true,
+            'download_uri' => true,
+            'image_uri' => true,
+            'asset_helper' => true,])
             ->add('categorie', ChoiceType::class, ['placeholder' => 'catégorie de l\'annonce', 'choices' => ['location' => 'Location', 'vente' => 'Vente'], ])
             ->add('type', ChoiceType::class, ['placeholder' => 'type de bien', 'choices' => ['maison' => 'Maison', 'appartement' => 'Appartement'], ])
             // ->add('createdAt')

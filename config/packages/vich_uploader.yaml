@@ -2,9 +2,9 @@ vich_uploader:
     db_driver: orm
 
     mappings:
-        product_image:
-            uri_prefix: /images/annonces
-            upload_destination: '%kernel.project_dir%/public/images/annonces'
+        annonce_photo:
+            uri_prefix: '%annonce_photo%'
+            upload_destination: '%kernel.project_dir%/public%annonce_photo%'
             namer: Vich\UploaderBundle\Naming\UniqidNamer
 
             inject_on_load: false

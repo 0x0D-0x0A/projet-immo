@@ -23,7 +23,8 @@
             {{ form_row(annonceForm.prix) }}
         </div>
         <div class="row">
-            {{ form_row(annonceForm.photo) }}
+            {{ form_row(annonceForm.photoFile) }}
+            <img src="{{ asset('/annonce/photo/' ~ annonce.photo) }}">
         </div>
         <div class="row">
             {{ form_row(annonceForm.categorie) }}
