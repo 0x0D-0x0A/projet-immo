@@ -1,11 +1,12 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Annonce index{% endblock %}
+{% block title %}Liste des annonces{% endblock %}
 
 {% block body %}
-    <h1>Annonce index</h1>
+    <h1>Nos biens disponibles</h1>
 
     <div>
+        {# PROVISOIRE #}
         Ici, les images ne sont pas encore affichées, juste le nom du fichier (modifier quand on fera la déco)
     </div>
 
@@ -43,11 +44,11 @@
             </tr>
         {% else %}
             <tr>
-                <td colspan="10">no records found</td>
+                <td colspan="10">Aucune annonce disponible.</td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
 
-    <a href="{{ path('annonce_new') }}">Create new</a>
+    <a href="{{ path('annonce_new') }}">Nouvelle annonce</a>
 {% endblock %}

@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Annonce{% endblock %}
+{% block title %}{{ annonce.titre }} | Immo Super, (presque) mieux que Super Immo !{% endblock %}
 
 {% block body %}
     <h1>Annonce</h1>
@@ -26,7 +26,7 @@
             <tr>
                 <th>Photo</th>
                  {% if annonce.photo is not same as(null) %}
-                      <td><img src="{{ asset('/annonce/photo/' ~ annonce.photo) }}"></td>
+                      <td><img src="{{ asset('/annonce/photo/' ~ annonce.photo) }}" class=""></td>
                 {% else %}
                       <td>Aucune photo disponible.</td>
                 {% endif %}>

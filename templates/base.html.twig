@@ -2,7 +2,7 @@
 <html lang="fr">
 <head>
 	<meta charset="UTF-8">
-	<title>{% block title %}Welcome!{% endblock %}</title>
+	<title>{% block title %}Bienvenu(e) sur Immo Super, le site qui fait (presque) mieux que Super Immo !{% endblock %}</title>
 	{% block stylesheets %}
 	<!-- Font Awesome -->
 	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
@@ -16,7 +16,7 @@
 	<link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" rel="stylesheet" />
 	{% endblock %}
 </head>
-<body>
+<body class="indigo lighten-4">
 
 	<header>
 		<!--Navbar-->
@@ -102,6 +102,9 @@
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.19.1/js/mdb.min.js"></script>
 <!-- Toastr -->
 <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+{% endblock %}
+{% block javascript %}
+{# Ajout possible de scripts js "faits maison" #}
 {% endblock %}
 </body>
 </html>

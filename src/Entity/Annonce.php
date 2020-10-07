@@ -79,6 +79,12 @@ class Annonce
      */
     private $proprietaire;
 
+    // fonction pour vérifier si le user connecté est l'auteur de l'annonce
+    public function isProprietaire(User $user = null)
+    {
+        return $user && $user === $this->getProprietaire();
+    }
+
     public function getId(): ?int
     {
         return $this->id;

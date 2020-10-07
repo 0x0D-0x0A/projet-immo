@@ -27,8 +27,8 @@ class AnnonceType extends AbstractType
             'download_uri' => true,
             'image_uri' => true,
             'asset_helper' => true,])
-            ->add('categorie', ChoiceType::class, ['placeholder' => 'catégorie de l\'annonce', 'choices' => ['location' => 'Location', 'vente' => 'Vente'], ])
-            ->add('type', ChoiceType::class, ['placeholder' => 'type de bien', 'choices' => ['maison' => 'Maison', 'appartement' => 'Appartement'], ])
+            ->add('categorie', ChoiceType::class, ['placeholder' => 'catégorie de l\'annonce', 'choices' => ['Location' => 'location', 'Vente' => 'vente'], ])
+            ->add('type', ChoiceType::class, ['placeholder' => 'type de bien', 'choices' => ['Maison' => 'maison', 'Appartement' => 'appartement'], ])
             // ->add('createdAt')
             // ->add('updatedAt')
         ;
