@@ -26,7 +26,7 @@
             <tr>
                 <th>Photo</th>
                  {% if annonce.photo is not same as(null) %}
-                      <td><img src="{{ asset('/annonce/photo/' ~ annonce.photo) }}" class=""></td>
+                      <td><img src="{{ asset('/annonce/photo/' ~ annonce.photo) }}" class="" style="max-height: 20rem;"></td>
                 {% else %}
                       <td>Aucune photo disponible.</td>
                 {% endif %}>
