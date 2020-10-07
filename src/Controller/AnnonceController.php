@@ -10,6 +10,9 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+use Knp\Component\Pager\PaginatorInterface;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+
 
 /**
  * @Route("/annonce")
@@ -17,15 +20,43 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
 class AnnonceController extends AbstractController
 {
+
+    ////////////////////////////////////////// Zone de Test //////////////////////////////////////
     /**
      * @Route("/", name="annonce_index", methods={"GET"})
      */
-    public function index(AnnonceRepository $annonceRepository): Response
+    public function index(Request $request, PaginatorInterface $paginator)
+    {
+        $requestedPage= $request->query->getInt('page', 1);
+
+            if($requestedPage < 1){
+                throw new NotFoundHttpException();
+            }
+
+            $em = $this->getDoctrine()->getManager();
+
+        $query = $em->createQuery('SELECT annonce FROM App\Entity\Annonce annonce');
+
+        $pageAnnonces = $paginator->paginate(
+            $query,
+            $requestedPage,
+            3
+        );
+
+        return $this->render('annonce/index.html.twig',
+            [
+                'annonces' => $pageAnnonces
+            ]);
+    }
+    /////////////////////////////////////////////////////////////////////////////////////////////
+
+    /*public function index(AnnonceRepository $annonceRepository): Response
     {
         return $this->render('annonce/index.html.twig', [
             'annonces' => $annonceRepository->findAll(),
         ]);
     }
+    */
 
     /**
      * @Route("/new", name="annonce_new", methods={"GET","POST"})

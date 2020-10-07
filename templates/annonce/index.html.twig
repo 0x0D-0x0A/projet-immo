@@ -12,6 +12,21 @@
 
 
     {# présentation sous forme de cards #}
+    <p>Nombre d'articles : 
+{{ annonces.getTotalItemCount }}</p>
+<div class="row">
+    <div class="col-8 offset-2">
+        <p class="text-center my-3">
+            <span class="mx-2">
+{{  knp_pagination_sortable(annonces, 'Trier par titre', 'annonce.titre') }} 
+</span>
+
+            <span class="mx-2">
+{{ knp_pagination_sortable(annonces, 'Trier par date', 'annonce.createdAt') }}
+        </p>
+    </div>
+</div>
+
     <div class="row row-cols-1 row-cols-md-3">
     {% for annonce in annonces %}
     <!--Card start-->
@@ -91,4 +106,6 @@
     </table> #}
 
     <a href="{{ path('annonce_new') }}">Nouvelle annonce</a>
+
+    {{ knp_pagination_render(annonces) }}
 {% endblock %}
