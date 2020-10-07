@@ -69,6 +69,9 @@ class AnnonceController extends AbstractController
      */
     public function edit(Request $request, Annonce $annonce): Response
     {
+
+        if ($annonce->isProprietaire($this->getUser())) {
+
         $form = $this->createForm(AnnonceType::class, $annonce);
         $form->handleRequest($request);
 
@@ -82,6 +85,10 @@ class AnnonceController extends AbstractController
             'annonce' => $annonce,
             'annonceForm' => $form->createView(),
         ]);
+
+        } else {
+            return $this->redirectToRoute('annonce_index');
+        }
     }
 
     /**
@@ -90,6 +97,8 @@ class AnnonceController extends AbstractController
      */
     public function delete(Request $request, Annonce $annonce): Response
     {
+        if ($annonce->isProprietaire($this->getUser())) {
+
         if ($this->isCsrfTokenValid('delete'.$annonce->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($annonce);
@@ -97,5 +106,9 @@ class AnnonceController extends AbstractController
         }
 
         return $this->redirectToRoute('annonce_index');
+
+        } else {
+            return $this->redirectToRoute('annonce_index');
+        }
     }
 }
