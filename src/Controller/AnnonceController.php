@@ -1,9 +1,11 @@
 <?php
 
 namespace App\Controller;
-
+          
 use App\Entity\Annonce;
+use App\Entity\Search;
 use App\Form\AnnonceType;
+use App\Form\SearchType;
 use App\Repository\AnnonceRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -21,12 +23,18 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 class AnnonceController extends AbstractController
 {
 
-    ////////////////////////////////////////// Zone de Test //////////////////////////////////////
+    /////////////////////////// Zone de Test ///////////////////////////////
+
     /**
      * @Route("/", name="annonce_index", methods={"GET"})
      */
-    public function index(Request $request, PaginatorInterface $paginator)
+    public function index(AnnonceRepository $annonceRepository, Request $request, PaginatorInterface $paginator): Response
     {
+        $search  = new Search;
+        $form = $this->createForm(SearchType::class, $search);
+        $form->handleRequest($request);
+   
+        $query = $this->getDoctrine()->getRepository(Annonce::class)->findPaginateArticle($search);
         $requestedPage= $request->query->getInt('page', 1);
 
             if($requestedPage < 1){
@@ -45,7 +53,8 @@ class AnnonceController extends AbstractController
 
         return $this->render('annonce/index.html.twig',
             [
-                'annonces' => $pageAnnonces
+                'annonces' => $pageAnnonces,
+                'form' => $form->createView()
             ]);
     }
     /////////////////////////////////////////////////////////////////////////////////////////////
@@ -185,5 +194,9 @@ class AnnonceController extends AbstractController
             return $this->redirectToRoute('annonce_index');
         }
     }
+
+///////////////////////////////////// Fonction Recherche //////////////////////////////////////////////////////////
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 }

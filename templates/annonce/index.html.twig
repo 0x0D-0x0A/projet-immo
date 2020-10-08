@@ -9,7 +9,15 @@
         PROVISOIRE:
         Ici, les images ne sont pas encore affichées, juste le nom du fichier (modifier quand on fera la déco)
     </div> #}
-
+<div>
+        {{ form_start(form) }}
+            {{ form_widget(form.searchTitre) }}
+            {{ form_widget(form.searchPrix) }}
+            {{ form_widget(form.searchCategorie) }}
+            {{ form_widget(form.searchType) }}
+            <button class="btn btn-default">Recherche</button>
+        {{ form_end(form) }}
+    </div>
 
     {# présentation sous forme de cards #}
     <p>Nombre d'articles : 

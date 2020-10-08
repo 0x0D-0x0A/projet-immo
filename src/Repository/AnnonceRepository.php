@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Annonce;
+use App\Entity\Search;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -18,8 +19,39 @@ class AnnonceRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Annonce::class);
     }
+    ///////////////////////// recherche ////////////////////////
+    
+    /**
+     * @return Query
+     */
+     public function findPaginateArticle(Search $search) 
+    {
+       $query = $this->createQueryBuilder('a')
+                    ->orderBy('a.CreatedAt', 'DESC');
 
+        if ($search->getSearchTitre()){
+            $query = $query->andWhere('a.Titre LIKE :searchannoncetitre')
+                            ->setParameter('searchannoncetitre', '%'.addcslashes($search->getSearchTitre(), '%_').'%');
+        }
 
+        if ($search->getSearchPrix()){
+            $query = $query->andWhere('a.Prix LIKE :searchannonceprix')
+                            ->setParameter('searchannonceprix', '%'.addcslashes($search->getSearchPrix(), '%_').'%');
+        }
+
+        if ($search->getSearchCategorie()){
+            $query = $query->andWhere('a.Titre LIKE :searchannoncecategorie')
+                            ->setParameter('searchannoncecategorie', '%'.addcslashes($search->getSearchCategorie(), '%_').'%');
+        }
+
+        if ($search->getSearchType()){
+            $query = $query->andWhere('a.Titre LIKE :searchannoncetype')
+                            ->setParameter('searchannoncetype', '%'.addcslashes($search->getSearchType(), '%_').'%');
+        }
+
+        return $query->getQuery();
+    }
+    /////////////////////////////////////////////////////////////
 
     ////////////////  Test requête pour récupérer les annonces créées par le user ///////////////
 
@@ -71,4 +103,6 @@ class AnnonceRepository extends ServiceEntityRepository
         ;
     }
     */
+
+   
 }
