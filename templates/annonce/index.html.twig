@@ -27,25 +27,27 @@
     </div>
 </div>
 
-    <div class="row row-cols-1 row-cols-md-3">
+    <div class="row">
     {% for annonce in annonces %}
     <!--Card start-->
-  <div class="col mb-4">
-    <div class="card h-75">
+  <div class="col-md-6 col-lg-4 mb-sm-4 mb-lg-0" style="max-height: 70vh !important;">
+    <div class="card h-100">
       <!--Card image-->
-      <div class="view overlay img-fluid h-50">
-        <img class="card-img-top h-100 w-100" style="overflow: hidden; /*transform: translate(0, -50%);*/ object-fit: cover;" src="{{ asset('/annonce/photo/' ~ annonce.photo) }}" alt="{{ annonce.categorie ~ '_' ~ annonce.type ~ '_' ~ annonce.id }}">
+      <div class="view overlay img-fluid" style="height: 50% !important;">
+        <img class="card-img-top h-100 w-100 photo" style="overflow: hidden; /*transform: translate(0, -50%);*/ object-fit: cover;" src="{{ asset('/annonce/photo/' ~ annonce.photo) }}" alt="{{ annonce.categorie ~ '_' ~ annonce.type ~ '_' ~ annonce.id }}">
         <a href="#!">
           <div class="mask rgba-white-slight"></div>
         </a>
       </div>
 
                       <!--Card content-->
-              <div class="card-body">
+              <div class="card-body" style="max-height: 50% !important;">
                 <!--Title-->
                 <h4 class="card-title">{{ annonce.titre }}</h4>
                 <!--Text-->
-                <p class="card-text">{{ annonce.description }}</p>
+                {# <p class="card-text">{{ annonce.description }}</p> #}
+                {% set text = annonce.description|striptags %}
+                <p class="card-text">{{ text|length > 150 ? text|slice(0, 150) ~ '....' : text }}</p>
                 <div>
                 <p class="card-text">Prix : {{ annonce.prix }} €</p>
                 </div>
