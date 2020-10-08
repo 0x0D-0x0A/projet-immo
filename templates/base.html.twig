@@ -14,6 +14,8 @@
 	<link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.19.1/css/mdb.min.css" rel="stylesheet">
 	<!-- Toastr -->
 	<link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" rel="stylesheet" />
+	<!--Styles personnalisés-->
+	<link href="/css/style.css" rel="stylesheet" />
 	{% endblock %}
 </head>
 <body class="indigo lighten-4">
@@ -70,9 +72,9 @@
 					<a class="nav-link" href="{{ path('annonce_index') }}">Nos annonces</a>
 				</li>
 				
-				{% if is_granted("ROLE_ADMIN") %}
+				{% if is_granted("ROLE_USER") %}
 				<li class="nav-item">
-					<a class="nav-link" href="{{ path('annonce_new') }}">Nouvelle annonce</a>
+					<a class="nav-link" href="{{ path('annonce_user') }}">Mes biens</a>
 				</li>
 				{% endif %}
 

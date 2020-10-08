@@ -21,6 +21,28 @@ class AnnonceRepository extends ServiceEntityRepository
 
 
 
+    ////////////////  Test requête pour récupérer les annonces créées par le user ///////////////
+
+    /**
+     * @return Query
+     */
+    public function findUserAnnonce(String $string)
+    {
+        $query = $this->createQueryBuilder('a')
+                    ->orderBy('a.CreatedAt', 'DESC');
+
+        if ($search->getSearchTitle()) {
+            $query = $query->andWhere('a.Title LIKE :searcharticletitle')
+                            ->setParameter('searcharticletitle', '%'.addcslashes($search->getSearchTitle(), '%_').'%');
+        }
+
+        return $query->getQuery();
+    }
+
+    /////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
     // /**
     //  * @return Annonce[] Returns an array of Annonce objects
     //  */

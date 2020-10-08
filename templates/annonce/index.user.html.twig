@@ -1,0 +1,84 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste des annonces{% endblock %}
+
+{% block body %}
+    <h1>Nos biens disponibles</h1>
+
+    {# <div>
+        PROVISOIRE:
+        Ici, les images ne sont pas encore affichées, juste le nom du fichier (modifier quand on fera la déco)
+    </div> #}
+
+
+    {# présentation sous forme de cards #}
+    <p>Nombre d'articles : 
+{{ annonces.getTotalItemCount }}</p>
+<div class="row">
+    <div class="col-8 offset-2">
+        <p class="text-center my-3">
+            <span class="mx-2">
+{{  knp_pagination_sortable(annonces, 'Trier par titre', 'annonce.titre') }} 
+</span>
+
+            <span class="mx-2">
+{{ knp_pagination_sortable(annonces, 'Trier par date', 'annonce.createdAt') }}
+        </p>
+    </div>
+</div>
+
+    <!--Row start-->
+    <div class="row">
+    {% for annonce in annonces %}
+    <!--Card start-->
+  <div class="col-md-6 col-lg-4 mb-sm-4 mb-lg-0" style="/*max-height: 70vh !important;*/">
+    <div class="card h-100">
+      <!--Card image-->
+      <div class="view overlay img-fluid" style="height: 50% !important;">
+        <img class="card-img-top h-100 w-100 photo" style="overflow: hidden; /*transform: translate(0, -50%);*/ object-fit: cover;" src="{{ asset('/annonce/photo/' ~ annonce.photo) }}" alt="{{ annonce.categorie ~ '_' ~ annonce.type ~ '_' ~ annonce.id }}">
+        <a href="#!">
+          <div class="mask rgba-white-slight"></div>
+        </a>
+      </div>
+
+      {# <a href="{{ path('annonce_show', {'id': annonce.id}) }}" type="button" class="btn b-rond b-action  ml-auto mr-4 mdb-color lighten-3 btn-light-blue btn-md">Plus d'infos</a> #}
+      <a href="{{ path('annonce_show', {'id': annonce.id}) }}" type="button" class="btn b-rond b-action ml-auto mr-4 mdb-color lighten-3"><i class="fas fa-chevron-right pl-1"></i></a>
+
+      <!--Card content-->
+      <div class="card-body" style="max-height: 50% !important;">
+        <!--Title-->
+        <h4 class="card-title">{{ annonce.titre }}</h4>
+        <!--Text-->
+        {# <p class="card-text">{{ annonce.description }}</p> #}
+        {% set text = annonce.description|striptags %}
+        <p class="card-text">{{ text|length > 150 ? text|slice(0, 150) ~ '....' : text }}</p>
+        <div>
+        <p class="card-text">Prix : {{ annonce.prix }} €</p>
+        </div>
+        <!-- Provides extra visual weight and identifies the primary action in a set of buttons -->
+        <a href="{{ path('annonce_show', {'id': annonce.id}) }}" type="button" class="btn btn-light-blue btn-md">Plus d'infos</a>
+      </div>
+
+      <!-- Card footer -->
+      <div class="rounded-bottom text-center pt-3 px-3">
+        <ul class="list-unstyled list-inline font-small pl-2 text-left">
+          <li class="list-inline-item pr-2">Publiée le {{ annonce.createdAt ? annonce.createdAt|date('Y-m-d H:i:s') : '' }}</li>
+          <li class="list-inline-item pr-2">Mise à jour le {{ annonce.updatedAt ? annonce.updatedAt|date('Y-m-d H:i:s') : '' }}</li>
+        </ul>
+      </div>
+
+    </div>
+    <!-- Card end-->
+  </div>
+  <!--Row end-->
+  {% else %}
+    <div>
+        <p>Aucune annonce disponible.</p>
+    </div>
+  {% endfor %}
+</div>
+
+    <a href="{{ path('annonce_new') }}">Nouvelle annonce</a>
+
+    {{ knp_pagination_render(annonces) }}
+{% endblock %}

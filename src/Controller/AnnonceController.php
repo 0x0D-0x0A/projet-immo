@@ -58,6 +58,49 @@ class AnnonceController extends AbstractController
     }
     */
 
+    //////////////////////////////// Test pour affichage annonces du user //////////////////////////////////
+    /**
+     * @Route("/user", name="annonce_user", methods={"GET"})
+     * @Security("is_granted('ROLE_USER')")
+     */
+    public function indexUser(Request $request, PaginatorInterface $paginator)
+    {        
+        $user = $this->getUser()->getId();
+
+        // dump($user);
+
+        $requestedPage= $request->query->getInt('page', 1);
+
+        // dump($requestedPage);
+
+            if($requestedPage < 1){
+                throw new NotFoundHttpException();
+            }
+
+        $em = $this->getDoctrine()->getManager(); // création de l'entity manager
+
+        $qb = $em->createQueryBuilder(); // création du QueryBuilder
+
+        $qb->select('a')
+            ->from(Annonce::class, 'a')
+            ->where('a.proprietaire = :id_user')
+            ->setParameter('id_user', $user);
+
+        $query = $qb->getQuery();
+
+        $pageAnnonces = $paginator->paginate(
+            $query,
+            $requestedPage,
+            3
+        );
+
+        return $this->render('annonce/index.user.html.twig',
+            [
+                'annonces' => $pageAnnonces
+            ]);
+    }
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////
+
     /**
      * @Route("/new", name="annonce_new", methods={"GET","POST"})
      * @Security("is_granted('ROLE_USER')")
@@ -142,4 +185,5 @@ class AnnonceController extends AbstractController
             return $this->redirectToRoute('annonce_index');
         }
     }
+
 }
